@@ -1,51 +1,42 @@
-const prompts = [
-  {
-    title: "YouTube Script Generator",
-    text: "Write a viral YouTube script on [topic] with a strong hook and storytelling."
-  },
-  {
-    title: "Instagram Caption",
-    text: "Create a short engaging Instagram caption for a post about [topic]."
-  },
-  {
-    title: "AI Image Prompt",
-    text: "Create a cinematic AI image prompt for [scene], ultra realistic, 4k."
-  },
-  {
-    title: "Business Idea Generator",
-    text: "Generate 5 profitable online business ideas for beginners in 2026."
-  }
-];
-
-const container = document.getElementById("promptContainer");
+const list = document.getElementById("promptList");
 const search = document.getElementById("search");
 
-function renderPrompts(data) {
-  container.innerHTML = "";
-  data.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${p.title}</h3>
-      <p>${p.text}</p>
-      <button class="copy-btn">Copy Prompt</button>
-    `;
-    card.querySelector("button").onclick = () => {
-      navigator.clipboard.writeText(p.text);
-      card.querySelector("button").innerText = "Copied!";
-      setTimeout(() => card.querySelector("button").innerText = "Copy Prompt", 1200);
-    };
-    container.appendChild(card);
+if (list) {
+  db.collection("prompts").onSnapshot(snapshot => {
+    list.innerHTML = "";
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      list.innerHTML += `
+        <div class="card">
+          <h3>${d.title}</h3>
+          <p>${d.prompt.substring(0, 80)}...</p>
+          <a href="prompt.html?id=${doc.id}">View</a>
+        </div>
+      `;
+    });
   });
 }
 
-search.addEventListener("input", () => {
-  const value = search.value.toLowerCase();
-  const filtered = prompts.filter(p =>
-    p.title.toLowerCase().includes(value) ||
-    p.text.toLowerCase().includes(value)
-  );
-  renderPrompts(filtered);
-});
+function submitPrompt() {
+  db.collection("prompts").add({
+    title: title.value,
+    prompt: prompt.value,
+    tags: tags.value,
+    created: new Date()
+  }).then(() => {
+    alert("Prompt submitted!");
+    location.href = "index.html";
+  });
+}
 
-renderPrompts(prompts);
+const params = new URLSearchParams(location.search);
+if (params.get("id")) {
+  db.collection("prompts").doc(params.get("id")).get().then(doc => {
+    const d = doc.data();
+    document.getElementById("promptBox").innerHTML = `
+      <h2>${d.title}</h2>
+      <pre>${d.prompt}</pre>
+      <button onclick="navigator.clipboard.writeText(\`${d.prompt}\`)">Copy Prompt</button>
+    `;
+  });
+}
