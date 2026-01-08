@@ -1,1 +1,24 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Prompt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>Submit Prompt</header>
+
+<div class="container">
+  <input id="title" placeholder="Prompt title">
+  <textarea id="prompt" placeholder="Prompt text"></textarea>
+  <input id="tags" placeholder="Tags (comma separated)">
+  <button onclick="submitPrompt()">Submit</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
