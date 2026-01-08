@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PromptHub</title>
+  <title>Banana Prompts</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <div class="logo">🍌 PromptHub</div>
-  <input type="text" id="search" placeholder="Search prompts...">
-</header>
+<header>🍌 Banana Prompts</header>
 
-<main id="promptContainer"></main>
+<div class="container">
+  <input id="search" placeholder="Search prompts...">
+  <div class="grid" id="promptList"></div>
+</div>
 
-<footer>
-  <p>© 2026 PromptHub • Built with HTML, CSS & JS</p>
-</footer>
-
-<script src="script.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
